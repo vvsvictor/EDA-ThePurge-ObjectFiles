@@ -84,13 +84,21 @@ do
 done
 clear
 echo "-----------------------------------"
-echo "Veces ganadas por el jugador 1:"
+printf "Veces ganadas por el jugador 1 ("
+printf ${Jugadores[0]}
+printf "):\n"
 echo ${contador[0]}
-echo "Veces ganadas por el jugador 2:"
+printf "Veces ganadas por el jugador 2 ("
+printf ${Jugadores[1]}
+printf "):\n"
 echo ${contador[1]}
-echo "Veces ganadas por el jugador 3:"
+printf "Veces ganadas por el jugador 3 ("
+printf ${Jugadores[2]}
+printf "):\n"
 echo ${contador[2]}
-echo "Veces ganadas por el jugador 4:"
+printf "Veces ganadas por el jugador 4 ("
+printf ${Jugadores[3]}
+printf "):\n"
 echo ${contador[3]}
 echo "Out of:"
 echo $((Reps*4))
