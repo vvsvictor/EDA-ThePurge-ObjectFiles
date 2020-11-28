@@ -36,7 +36,11 @@ Jugadores[15]=${Jugadores[2]}
 
 counter=1
 declare -a resultado
-contador=0
+declare -a contador
+contador[0]=0
+contador[1]=0
+contador[2]=0
+contador[3]=0
 
 while [ $counter -le $Reps ]
 do	
@@ -51,6 +55,10 @@ do
 		resultado[1]=$(tail -4 default.res | head -1 | awk '{print $3}')
 		resultado[2]=$(tail -4 default.res | head -1 | awk '{print $4}')
 		resultado[3]=$(tail -4 default.res | head -1 | awk '{print $5}')
+		resultado[4]=$(tail -4 default.res | head -1 | awk '{print $2}')
+		resultado[5]=$(tail -4 default.res | head -1 | awk '{print $3}')
+		resultado[6]=$(tail -4 default.res | head -1 | awk '{print $4}')
+		resultado[7]=$(tail -4 default.res | head -1 | awk '{print $5}')
 		
 		max=${resultado[0]}
 		for j in 1 2 3
@@ -61,19 +69,29 @@ do
 				max=$temp
 			fi
 		done
-		echo $max
 		
-		temp=${resultado[$((3-i))]}
-		if (( $((temp)) == $((max)) ))
-		then
-			((contador++))
-		fi
+		for j in 0 1 2 3
+		do
+			temp=${resultado[$((7-j-i))]}
+			if (( $((temp)) == $((max)) ))
+			then
+				((contador[$((3-j))]++))
+			fi
+		done
 
 	done
 	((counter++))
 done
+clear
 echo "-----------------------------------"
-echo "Veces ganadas:"
-echo $contador
+echo "Veces ganadas por el jugador 1:"
+echo ${contador[0]}
+echo "Veces ganadas por el jugador 2:"
+echo ${contador[1]}
+echo "Veces ganadas por el jugador 3:"
+echo ${contador[2]}
+echo "Veces ganadas por el jugador 4:"
+echo ${contador[3]}
 echo "Out of:"
 echo $((Reps*4))
+echo "-----------------------------------"
