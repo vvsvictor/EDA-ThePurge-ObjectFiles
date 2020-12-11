@@ -11,15 +11,22 @@
 #include <cstdlib>
 
 void usage() {
-    std::cout << "Usage: ./test player1 player2 player3 player4 n" << std::endl;
+    std::cout << "Usage: ./test player1 player2 player3 player4 n flag" << std::endl;
+    std::cout << "Flag: r to play with random seeds, f to play with 1 to the n seeds" << std::endl;
     std::cout << "Default input file: default.cnf" << std::endl;
     std::cout << "Default output file: default.res" << std::endl;
 }
 
 int main(int argv, char* argc[]) {
-    if(argv != 6) {
+    if(argv != 7) {
         usage();
-        return 0;
+        exit(1);
+    }
+    
+    char flag=*argc[6];
+    if(flag!='r' and flag!='f') {
+        std::cout << "Flag must be f for fixed seeds or r for random seeds" << std::endl;
+        exit(1);
     }
     
     int maxPoints=-1;
@@ -29,12 +36,16 @@ int main(int argv, char* argc[]) {
     
     //Seed for random numbers, based on current time
     srand((unsigned int)time(NULL));
+    int seed=0;
     
     for(int i = 0; i < atoi(argc[5])*4; ++i) {
         //Genrate a new random game seed every 4 iterations
-        int seed;
-        if(i%4==0)
-            seed = rand()%10000;
+        if(i%4==0) {
+            if(flag=='r')
+                seed = rand()%10000;
+            else
+                ++seed;
+        }
         
         int ret = fork();
         //Child plays the game
